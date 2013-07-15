@@ -29,7 +29,7 @@ class Database {
 
 	//handles dynamic formation of INSERT and UPDATE queries from $_POST and executes them
 	//post array should be cleaned before using this function
-	public function execute_from_assoc($post_array, $table_name, $statement_type="INSERT", $set_statement=NULL){
+	public static function execute_from_assoc($post_array, $table_name, $statement_type="INSERT", $set_statement=NULL){
 		$statement_type = strtoupper($statement_type);
 		if($statement_type == "INSERT"){
 			$query = $statement_type . " INTO " . $table_name . " ("; 
@@ -48,10 +48,9 @@ class Database {
 		//if statement type is UPDATE, the id of the row to update was specified in the $post_array,
 		//and what to update (set) was specified
 		else if($statement_type == "UPDATE" &&
-				isset($post_array['id']) &&
 			    $set_statement != NULL){
 			$query = $statement_type . " " . $table_name . " SET " . $set_statement . " = '" . $post_array[$set_statement]
-			. "' WHERE id = '" . $post_array['id'] . "' LIMIT 1";
+			. "' LIMIT 1";
 		}
 		else{
 			echo "incorrect parameters passed to InsertUpdate::execute_from_assoc()";

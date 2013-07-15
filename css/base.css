@@ -1,0 +1,38 @@
+body{
+	width:960px;
+	margin:auto;
+}
+
+.new-search, .live-searches, .error, .location{
+	width: 100%;
+	padding: 20px;
+	margin: 20px auto;
+	background-color: #eee;
+	border: 1px solid #ccc;
+}
+
+.search{
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0px;
+}
+
+.search span{
+	color: #1A8CD9;
+	margin-right: 20px;
+}
+
+.search span.delete{
+	color: #E01B1E;
+	float:right;
+	margin-right: 20px;
+}
+
+.delete-submit{
+	float:right;
+	margin-right: 0px;
+}
+
+.error{
+	padding: 10px 20px;
+	color: #E01B1E;
+}

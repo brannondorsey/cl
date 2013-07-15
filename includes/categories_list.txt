@@ -1,0 +1,112 @@
+>all 
+ccc>all community
+eee>all event
+sss>all for sale / wanted
+ata> antiques
+atd> antiques - by dealer
+atq> antiques - by owner
+ppa> appliances
+ppd> appliances - by dealer
+app> appliances - by owner
+ard> arts &amp; crafts - by dealer
+art> arts &amp; crafts - by owner
+ara> arts+crafts
+pta> auto parts
+ptd> auto parts - by dealer
+pts> auto parts - by owner
+bad> baby &amp; kid stuff - by dealer
+bab> baby &amp; kid stuff - by owner
+baa> baby+kids
+bar> barter
+haa> beauty+hlth
+bid> bicycles - by dealer
+bik> bicycles - by owner
+bia> bikes
+boo> boats
+bod> boats - by dealer
+boa> boats - by owner
+bka> books
+bkd> books &amp; magazines - by dealer
+bks> books &amp; magazines - by owner
+bfa> business
+bfd> business/commercial - by dealer
+bfs> business/commercial - by owner
+ctd> cars &amp; trucks - by dealer
+cto> cars &amp; trucks - by owner
+cta> cars+trucks
+emq> cds / dvds / vhs - by dealer
+emd> cds / dvds / vhs - by owner
+ema> cds/dvd/vhs
+moa> cell phones
+mod> cell phones - by dealer
+mob> cell phones - by owner
+cla> clothes+acc
+cld> clothing &amp; accessories - by deal
+clo> clothing &amp; accessories - by owne
+cba> collectibles
+cbd> collectibles - by dealer
+clt> collectibles - by owner
+sya> computers
+syd> computers - by dealer
+sys> computers - by owner
+ela> electronics
+eld> electronics - by dealer
+ele> electronics - by owner
+grq> farm &amp; garden - by dealer
+grd> farm &amp; garden - by owner
+gra> farm+garden
+ssq> for sale by dealer
+sso> for sale by owner
+zip> free stuff
+fua> furniture
+fud> furniture - by dealer
+fuo> furniture - by owner
+gms> garage sales
+foa> general
+fod> general for sale - by dealer
+for> general for sale - by owner
+had> health and beauty - by dealer
+hab> health and beauty - by owner
+hsa> household
+hsd> household items - by dealer
+hsh> household items - by owner
+wan> items wanted
+jwa> jewelry
+jwd> jewelry - by dealer
+jwl> jewelry - by owner
+maa> materials
+mad> materials - by dealer
+mat> materials - by owner
+mca> motorcycles
+mcd> motorcycles/scooters - by dealer
+mcy> motorcycles/scooters - by owner
+msa> music instr
+msd> musical instruments - by dealer
+msg> musical instruments - by owner
+pha> photo+video
+phd> photo/video - by dealer
+pho> photo/video - by owner
+rva> recreational vehicles
+rvd> rvs - by dealer
+rvs> rvs - by owner
+sga> sporting
+sgd> sporting goods - by dealer
+spo> sporting goods - by owner
+tia> tickets
+tid> tickets - by dealer
+tix> tickets - by owner
+tla> tools
+tld> tools - by dealer
+tls> tools - by owner
+tad> toys &amp; games - by dealer
+tag> toys &amp; games - by owner
+taa> toys+games
+vga> video gaming
+vgd> video gaming - by dealer
+vgm> video gaming - by owner
+ggg>all gigs
+hhh>all housing
+jjj>all jobs
+ppp>all personals
+res>all resume
+bbb>all services offered
