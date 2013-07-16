@@ -1,4 +1,3 @@
-<option value="" selected="selected">all</option>
 <option value="ccc">all community
 </option><option value="eee">all event
 </option><option value="sss">all for sale / wanted

@@ -54,6 +54,8 @@
 							<option value="id">Newest</option>
 							<option value="query">Searches</option>
 							<option value="location">Neighborhood</option>
+							<option value="price low">Low Price</option>
+							<option value="price high">High Price</option>
 						</select>
 					</span>
 					<input type="Submit" value="Filter results"  id="button">

@@ -15,12 +15,14 @@ class SearchHandler{
 		return false;
 	}
 
-	//returns 2D array of live searches
+	//returns 2D array of live searches if there are any and false if none are found
 	public function get_searches(){
 		$query = "SELECT * FROM " . $this->search_table;
-		$results = Database::get_all_results($query);
-		if(is_array($results[0])) return $results;
-		else return array($results);
+		if($results = Database::get_all_results($query)){
+			if(is_array($results[0])) return $results;
+			else return array($results);
+		}
+		else return false;
 	}
 
 	//returns an array of all of the live search query values.

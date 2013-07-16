@@ -1,4 +1,3 @@
->all 
 ccc>all community
 eee>all event
 sss>all for sale / wanted

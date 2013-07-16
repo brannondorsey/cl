@@ -64,8 +64,9 @@ require_once 'includes/class.SearchHandler.inc.php';
 			</div>
 			<form method="post" action="">
 				<div class="live-searches">
-				<?php if(!empty($live_searches)){
-					if(!is_array($live_searches[0])) $live_searches = array($live_searches); //if $live_searches is 1D because there is only one result make it 2D
+				<?php if(!empty($live_searches) &&
+						$live_searches != FALSE){
+					// if(!is_array($live_searches[0])) $live_searches = array($live_searches); //if $live_searches is 1D because there is only one result make it 2D
 					//if there is more than one result
 					foreach ($live_searches as $search) {
 						$max = (floatval($search['max']) == 0) ? "none" : "$" . $search['max'];

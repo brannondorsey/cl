@@ -5,6 +5,8 @@
 	Database::init_connection();
 	$forager = new Forager();
 	$urls = $forager->get_urls();
+	//delete all content from the database to ensure that results are fresh
+	$forager->delete_results_content();
 	foreach ($urls as $url) {
 		$forager->add_page_contents_to_db($url);
 	}
