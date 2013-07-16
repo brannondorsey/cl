@@ -1,4 +1,4 @@
-<option value="">all</option>
+<option value="" selected="selected">all</option>
 <option value="ccc">all community
 </option><option value="eee">all event
 </option><option value="sss">all for sale / wanted
@@ -58,7 +58,7 @@
 </option><option value="gra"> farm+garden
 </option><option value="ssq"> for sale by dealer
 </option><option value="sso"> for sale by owner
-</option><option value="zip" selected=""> free stuff
+</option><option value="zip"> free stuff
 </option><option value="fua"> furniture
 </option><option value="fud"> furniture - by dealer
 </option><option value="fuo"> furniture - by owner

@@ -3,12 +3,20 @@ body{
 	margin:auto;
 }
 
-.new-search, .live-searches, .error, .location{
+.new-search, .live-searches, .error, .location, .results-filter{
 	width: 100%;
 	padding: 20px;
 	margin: 20px auto;
 	background-color: #eee;
 	border: 1px solid #ccc;
+}
+
+.results-filter span{
+	margin-left: 20px;
+}
+
+.results-filter #button{
+	float: right;
 }
 
 .search{
