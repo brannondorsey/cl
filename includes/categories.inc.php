@@ -1,6 +1,6 @@
 <option value="ccc">all community
 </option><option value="eee">all event
-</option><option value="sss">all for sale / wanted
+</option><option value="sss" selected="selected">all for sale / wanted
 </option><option disabled="" value="">--
 </option><option value="ata"> antiques
 </option><option value="atd"> antiques - by dealer

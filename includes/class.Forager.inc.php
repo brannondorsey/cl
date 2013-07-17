@@ -5,16 +5,22 @@ require_once 'class.Database.inc.php';
 class Forager{
 
 	public $search_hand;
-	protected $q_former; //dynamically forms queries
+	public $q_former; //dynamically forms queries
 	protected $results_table = "results"; //table name for results table
 
 	public function __construct(){
 		$this->search_hand = new SearchHandler();
-		$this->q_former = new QueryFormer($this->search_hand->search_table);
+		$this->q_former = new QueryFormer($this->results_table);
 	}
 
-	public function load_data(){
-
+	//returns a 2D array of table results from an assoc array of craigslist flavored "indexd api parameters"
+	//assoc array must be cleaned before being passed into this method
+	public function load_results($assoc_array){
+		$query = $this->q_former->form_query($assoc_array);
+		//echo $query;
+		$results = Database::get_all_results($query);
+		$results = (is_array($results[0])) ? $results: array($results);
+		return $results;
 	}
 
 	//adds contents of a url to the results table in the db
@@ -51,7 +57,7 @@ class Forager{
 		$assoc_array['name']     = (string) $listing->span[0]->a;
 		$assoc_array['url']      = (strstr($listing->a['href'], "http")) ? $listing->a['href'] : strstr($url, "/search", TRUE) . $listing->a['href'];
 		$assoc_array['price']    = trim($listing->span[1]->span->span[0]->span, "$ ");
-		$assoc_array['location'] = strtolower(trim($listing->span[1]->span->small, "() "));
+		$assoc_array['location'] = ucwords(strtolower((trim($listing->span[1]->span->small, "() "))));
 		
 		//parse the query from the url
 		$query_name = strstr($url, "query=");
@@ -59,6 +65,14 @@ class Forager{
 		$query_name = strstr($query_name, "&minAsk=", TRUE);
 
 		$assoc_array['query']    = urldecode($query_name);
+
+		//parse the category code from the url
+		$category_code = strstr($url, "search/");
+		$category_code = str_replace("search/", "", $category_code);
+		$category_code = strstr($category_code, "?", TRUE);
+
+		$assoc_array['category'] = $category_code;
+
 		return $assoc_array;
 	}
 
@@ -76,11 +90,21 @@ class Forager{
 		foreach ($results as $search){
 			$min = (floatval($search['min']) != 0) ? floatval($search['min']) : "";
 			$max = (floatval($search['max']) != 0) ? floatval($search['max']) : "";
-			$url = "http://" . $this->search_hand->get_location() . ".craigslist.com/search/" . $search['category'] . "?srchType=A&query=" . $search['query']
+			$url = "http://" . $this->search_hand->get_location() . ".craigslist.com/search/" . $search['category'] . "?srchType=A&query=" . urlencode($search['query'])
 			. "&minAsk=" . $min . "&maxAsk=" . $max;
 			$urls[] = $url;
 		}
 		return $urls;
+	}
+
+	//returns the total number of results from an assoc array. 
+	//Array must be pre cleaned
+	public function get_total_numb_results($assoc_array){
+		$assoc_array['count_only'] = true;
+		$query = $this->q_former->form_query($assoc_array);
+		$results = Database::get_all_results($query);
+		if(isset($results['COUNT(*)'])) return $results['COUNT(*)'];
+		else return false;
 	}
 
 	//erases all data from the results table
@@ -88,6 +112,15 @@ class Forager{
 	public function delete_results_content(){
 		$query = "DELETE FROM " . $this->results_table;
 		return Database::execute_sql($query);
+	}
+
+	//removes a TRAILING page GET parameter key value pair from a url string
+	//called in index to handle previous and next pages
+	public function remove_page_parameter($url){
+		if($_url = strstr($url, "&page="));
+		else return $url; //url did not contain page parameter so return it
+		//return $page_pair;
+		return str_replace($_url, "", $url);
 	}
 }
 ?>

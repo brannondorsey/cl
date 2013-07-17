@@ -26,7 +26,8 @@ require_once 'includes/class.SearchHandler.inc.php';
 		foreach($post_array as $key => $value){
 			if(preg_match("/delete/", $key) == 1) $rows_to_delete[] = $value;
 		}
-		if(!empty($rows_to_delete))$search_hand->delete_searches($rows_to_delete);
+		//if rows were deleted remove them from the db
+		if(!empty($rows_to_delete)) $search_hand->delete_searches($rows_to_delete); 
 		if($error != "") $b_error = true;
 	}
 	$live_searches = $search_hand->get_searches(); //load search results

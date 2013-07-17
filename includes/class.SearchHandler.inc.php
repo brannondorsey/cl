@@ -25,15 +25,15 @@ class SearchHandler{
 		else return false;
 	}
 
-	//returns an array of all of the live search query values.
+	//returns an array of all of the live search query values. OLD DESCRIPTION.
 	//called in the index page for the "searching" select box options
-	public function get_live_search_queries(){
+	public function get_live_search_column_vals($property_name){
 		$live_searches = $this->get_searches();
-		$queries = array();
+		$properties = array();
 		foreach($live_searches as $search){
-			$queries[] = $search['query'];
+			if(!in_array($search[$property_name], $properties)) $properties[] = $search[$property_name];
 		}
-		return $queries;
+		return $properties;
 	}
 
 	//deletes search rows from an array of ids. 

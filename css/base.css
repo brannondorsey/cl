@@ -3,8 +3,7 @@ body{
 	margin:auto;
 }
 
-.new-search, .live-searches, .error, .location, .results-filter{
-	width: 100%;
+.new-search, .live-searches, .error, .location, .results-filter:not(span){
 	padding: 20px;
 	margin: 20px auto;
 	background-color: #eee;
@@ -19,9 +18,26 @@ body{
 	float: right;
 }
 
-.search{
+.search, .live-search-result{
 	border-bottom: 1px solid #ccc;
 	padding: 10px 0px;
+}
+
+.live-search-result span.price{
+	border: 1px solid #ccc;
+	border-radius: 0.25em;
+	-webkit-border-radius: 0.25em;
+	padding: 1px 3px;
+	margin-left: 5px;
+}
+
+.live-search-result span.listing-location{
+	margin-right: 20px;
+	float: right;
+}
+
+div.live-search-result-container{
+	margin-bottom: 30px;
 }
 
 .search span{
@@ -44,3 +60,22 @@ body{
 	padding: 10px 20px;
 	color: #E01B1E;
 }
+
+div.page-number-container{
+	margin: 0px auto 35px auto;
+}
+
+div.page-number-container a.next{
+	float: right;
+	margin-bottom: 30px;
+	font-size: 14pt;
+}
+
+div.page-number-container a.prev{
+	float: left;
+	margin-bottom: 30px;
+	font-size: 14pt;
+}
+
+
+

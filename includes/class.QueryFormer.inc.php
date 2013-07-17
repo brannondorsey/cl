@@ -3,8 +3,9 @@ require_once("class.Database.inc.php");
 
 class QueryFormer {
 
-	protected $columns_to_provide = "id, category, query, min, max";
-	protected $default_output_limit = 100;
+	public $default_output_limit = 100;
+
+	protected $columns_to_provide = "id, name, url, price, location, query, category";
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY id ";
 	protected $default_flow = "DESC ";
@@ -12,8 +13,8 @@ class QueryFormer {
 	protected $no_results_message = "no results found";
 	protected $table;
 
-	public function __construct($search_table){
-		$table = $search_table;
+	public function __construct($_table){
+		$this->table = $_table;
 	}
 
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
@@ -39,10 +40,16 @@ class QueryFormer {
 			else if($parameter == 'page') $page = (int) $value;
 			else if($parameter == 'exact' &&
 				    strtolower($value) == "true") $exact = true;
+			else if($parameter == 'count_only' &&
+				    strtolower($value) == "true" ||
+				    $parameter == 'count_only' &&
+				    $value == true){
+				$count_only = true;
+			} 
 
 		}
-
-		$query = "SELECT " . $this->columns_to_provide;
+		if($count_only) $query = "SELECT COUNT(*)";
+		else $query = "SELECT " . $this->columns_to_provide;
 		$query .= " FROM "  . $this->table ." ";
 
 		//add WHERE statements
@@ -104,8 +111,7 @@ class QueryFormer {
 			$page > 1){
 			$query .= " OFFSET " . $limit * ($page -1);
 		}
-
-		//echo $query . "<br/>";
+		
 		return $query;
 	}
 
