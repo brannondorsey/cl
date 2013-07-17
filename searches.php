@@ -1,7 +1,12 @@
 <?php 
 require_once 'includes/class.Database.inc.php';
 require_once 'includes/class.SearchHandler.inc.php';
+require_once 'includes/class.Session.inc.php';
+
+	error_reporting(E_ALL ^ E_NOTICE);
+	
 	Database::init_connection();
+	Session::start();
 	$search_hand = new SearchHandler();
 	$b_error = false;
 
@@ -10,13 +15,21 @@ require_once 'includes/class.SearchHandler.inc.php';
 	   !empty($_POST)){
 		$error = ""; //holds an error if it occurs
 		$post_array = Database::clean($_POST);
+
+		//handles loggin if not logged in and autorization code is posted and correct
+		if(!Session::is_logged_in() &&
+			isset($post_array['authorization']) &&
+			$post_array['authorization'] == Session::$auth_code){
+			Session::login();
+		}
+
 		//if the query was specified...
 		if(!empty($post_array['query'])){
 			//if the search does not already exist add it to the `searches` table
 			if(!$search_hand->search_exists($post_array['query'], $post_array['category'])) Database::execute_from_assoc($_POST, $search_hand->search_table);
 			//otherwise add an error
 			else $error= "search already exists";
-		}else $error = "search was not specified";
+		}
 		//if the location code was changed update the database
 		if(!empty($post_array['location'])){
 			Database::execute_from_assoc(array('location_name' => $post_array['location']), $search_hand->location_table, "UPDATE", "location_name");
@@ -28,6 +41,9 @@ require_once 'includes/class.SearchHandler.inc.php';
 		}
 		//if rows were deleted remove them from the db
 		if(!empty($rows_to_delete)) $search_hand->delete_searches($rows_to_delete); 
+		else{
+			if(empty($post_array['query'])) $error = "search was not specified";
+		}
 		if($error != "") $b_error = true;
 	}
 	$live_searches = $search_hand->get_searches(); //load search results
@@ -41,6 +57,8 @@ require_once 'includes/class.SearchHandler.inc.php';
 		</head>
 
 		<body>
+			<?php if(Session::is_logged_in()){?>
+			<?php require_once 'includes/navbar.inc.php'; ?>
 			<?php if($b_error) {?>
 			<div class="error">
 				<?php echo "Error: " . $error ?>
@@ -84,5 +102,6 @@ require_once 'includes/class.SearchHandler.inc.php';
 				<input type="submit" value="Delete Searches" class="delete-submit">
 				<?php } ?>
 			</form>
+			<?php }else require_once 'includes/login_form.inc.php'; ?>
 		</body>
 	</html>

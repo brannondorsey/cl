@@ -3,11 +3,30 @@ body{
 	margin:auto;
 }
 
-.new-search, .live-searches, .error, .location, .results-filter:not(span){
+.new-search, .live-searches, .error, .location, .results-filter:not(span), .navbar{
 	padding: 20px;
 	margin: 20px auto;
 	background-color: #eee;
 	border: 1px solid #ccc;
+}
+
+.navbar a{
+	margin-right: 20px;
+	color: black;
+	text-decoration: none;
+}
+
+.navbar a:visited{
+	color: black;
+	text-decoration: none;
+}
+
+.navbar a:hover{
+	text-decoration: underline;
+}
+
+.navbar a#logout-button{
+	float: right;
 }
 
 .results-filter span{
@@ -100,5 +119,22 @@ div.search-seperator{
 	font-weight: bold;
 }
 
+div.authorization-box{
+	width: 400px;
+	margin: 300px auto 0px auto;
+	background-color: #eee;
+	border: 1px solid #ccc;
+}
 
+div.authorization-box input#auth-input{
+	width: 150px;
+	margin: 50px auto 0px auto;
+	display: block;
+}
+
+div.authorization-box input[type="submit"]{
+	width: 150px;
+	margin: 20px auto 50px auto;
+	display: block;
+}
 

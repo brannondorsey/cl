@@ -2,6 +2,8 @@
 
 class Session {
 
+	public static $auth_code = "testertester";
+
 	public static function start(){
 		$session_cookie_lifetime = 72; //in hours
 		$lifetime_in_seconds = 60 * 60 * $session_cookie_lifetime;
@@ -16,8 +18,8 @@ class Session {
 		$_SESSION = array(); //uncomment this if session is persisting on page
 	}
 
-	public static function check_loggin_credentials($auth_code){
-		return ($auth_code == "testertester") true : false;
+	public static function check_loggin_credentials($_auth_code){
+		return ($_auth_code == $auth_code) ? true : false;
 	}
 
 	//adds assoc array values to $_SESSION superglobals on success, returns false on failure
@@ -26,7 +28,7 @@ class Session {
 	}
 
 	public static function is_logged_in(){
-		return (isset($_SESSION['logged_in']) ? true : false;
+		return (isset($_SESSION['logged_in'])) ? true : false;
 	}
 }
 
