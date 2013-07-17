@@ -5,10 +5,10 @@ class QueryFormer {
 
 	public $default_output_limit = 100;
 
-	protected $columns_to_provide = "id, name, url, price, location, query, category";
+	protected $columns_to_provide = "id, name, url, price, location, query, category, recency_rating";
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY id ";
-	protected $default_flow = "DESC ";
+	protected $default_flow = "ASC ";
 	protected $search = "";
 	protected $no_results_message = "no results found";
 	protected $table;

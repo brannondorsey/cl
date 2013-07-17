@@ -36,6 +36,6 @@
 		</head>
 
 		<body>
-			
+			<p class="persistent-message">Leave this page in an open tab. It refreshes itself every <?php echo $minutes_between_reloads ?> minutes and updates the database.</p>
 		</body>
 	</html>

@@ -36,13 +36,15 @@ class Forager{
 					// restore the old behaviour
 					libxml_use_internal_errors($old);
 					$craigslist = simplexml_import_dom($dom);
+					$i = 0; //used to give each listing a recency_rating
 					//for each listing...
 					foreach ($craigslist->body->blockquote->p as $listing){
 						//parse the listing html to get an assoc array that matches the results database
-						$listing_assoc = $this->get_listing_content($listing, $url);
+						$listing_assoc = $this->get_listing_content($listing, $url, $i);
 						$listing_assoc = Database::clean($listing_assoc);
 						//and execute the sql to add it to the database
 						if(!Database::execute_from_assoc($listing_assoc, $this->results_table)) echo "Not added to the database";
+						$i++;
 					}
 			 	}
 			 }else echo "No results for this search <br>";
@@ -52,12 +54,13 @@ class Forager{
 
 	//parses listing (<p>)html and returns assoc array of listing content with key values 
 	//that correspond with the results table columns
-	protected function get_listing_content($listing, $url){
+	protected function get_listing_content($listing, $url, $recency_rating){
 		$assoc_array = array();
 		$assoc_array['name']     = (string) $listing->span[0]->a;
 		$assoc_array['url']      = (strstr($listing->a['href'], "http")) ? $listing->a['href'] : strstr($url, "/search", TRUE) . $listing->a['href'];
 		$assoc_array['price']    = trim($listing->span[1]->span->span[0]->span, "$ ");
 		$assoc_array['location'] = ucwords(strtolower((trim($listing->span[1]->span->small, "() "))));
+		$assoc_array['recency_rating'] = $recency_rating;
 		
 		//parse the query from the url
 		$query_name = strstr($url, "query=");

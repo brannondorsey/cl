@@ -2,6 +2,8 @@
 	require_once 'includes/class.Forager.inc.php';
 	require_once 'includes/class.Database.inc.php';
 
+	error_reporting(E_ALL ^ E_NOTICE);
+
 	Database::init_connection();
 	$forager = new Forager();
 	$live_search_queries = $forager->search_hand->get_live_search_column_vals("query"); //get the queries of all live searches
@@ -21,7 +23,7 @@
 			if($get_array['searching'] != "all") $query_array['query'] = $get_array['searching'];
 
 			//handle the order_by and flow "parameters"
-			if($get_array['order_by'] == 'id' ||
+			if($get_array['order_by'] == 'recency_rating' ||
 			   $get_array['order_by'] == 'query' ||
 			   $get_array['order_by'] == 'location'){
 			   	$query_array['order_by'] = $get_array['order_by'];
@@ -36,7 +38,9 @@
 						$query_array['flow'] = 'desc';
 						break;
 					default:
-						$query_array['order_by'] = 'id'; 
+						$query_array['order_by'] = 'recency_rating';
+						$query_array['flow'] = 'desc'; 
+
 				}
 			}
 
@@ -105,7 +109,7 @@
 					<span>
 						Order By:
 						<select name="order_by" id="order_by">
-							<option value="id">Newest</option>
+							<option value="recency_rating">Newest</option>
 							<option value="query">Searches</option>
 							<option value="location">Neighborhood</option>
 							<option value="price low">Low Price</option>
@@ -116,18 +120,27 @@
 				</form>
 			</div>
 			<div class="live-search-result-container">
-				<?php if($results_exist){  
+				<?php if($results_exist){ 
+					$previous_result;
 					foreach($live_search_results as $result){ 
 						if(isset($result['url'])){?>
-				<div class="live-search-result">
-					<a href="<?php echo $result['url']?>"><?php echo $result['name']?></a>
-					<?php if($result['price'] != intval(0)) { ?> <span class="price"><?php echo "$" . $result['price']?></span> <?php } ?>
-					<span class="listing-location"><?php echo ucfirst($result['location']); ?></span>
-				</div>
-			<?php }
+							<?php if($_GET['order_by'] == 'query' &&
+							       $result['query'] != $previous_result['query']) { ?>
+							<div class="search-seperator">
+								<?php echo $result['query'];?>
+							</div>
+							<?php } ?>
+						<div class="live-search-result">
+							<a href="<?php echo $result['url']?>"><?php echo $result['name']?></a>
+							<?php if($result['price'] != intval(0)) { ?> <span class="price"><?php echo "$" . $result['price']?></span> <?php } ?>
+							<span class="listing-location"><?php echo ucfirst($result['location']); ?></span>
+						</div>
+			<?php $previous_result = $result; //assign the previous result
+				  }
 				}
 			} ?>
 			</div>
+			<span class="page-count"><?php if($results_exist) echo min($page, $total_pages) . " of " . $total_pages ?></span>
 			<?php //if there is more than 100 results
 			if($total_numb_results > $numb_results) {
 			$page_url = "index.php?" . http_build_query($_GET);?>

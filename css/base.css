@@ -63,6 +63,14 @@ div.live-search-result-container{
 
 div.page-number-container{
 	margin: 0px auto 35px auto;
+	clear: both;
+}
+
+span.page-count{
+	width: 50px;
+	display: block;
+	margin: 0px auto;
+	clear: both;
 }
 
 div.page-number-container a.next{
@@ -75,6 +83,21 @@ div.page-number-container a.prev{
 	float: left;
 	margin-bottom: 30px;
 	font-size: 14pt;
+}
+
+p.persistent-message{
+	width: 400px;
+	margin: 300px auto;
+	font-size: 14pt;
+}
+
+div.search-seperator{
+	border: 1px solid #ccc;
+	background-color: #eee;
+	padding: 10px 0px;
+	margin: 20px 0px;
+	text-align: center;
+	font-weight: bold;
 }
 
 
