@@ -7,6 +7,7 @@ class Forager{
 	public $search_hand;
 	public $q_former; //dynamically forms queries
 	protected $results_table = "results"; //table name for results table
+	protected $max_results_per_search = 10;
 
 	public function __construct(){
 		$this->search_hand = new SearchHandler();
@@ -40,12 +41,16 @@ class Forager{
 					$i = 0; //used to give each listing a recency_rating
 					//for each listing...
 					foreach ($craigslist->body->blockquote->p as $listing){
-						//parse the listing html to get an assoc array that matches the results database
-						$listing_assoc = $this->get_listing_content($listing, $url, $i);
-						$listing_assoc = Database::clean($listing_assoc);
-						//and execute the sql to add it to the database
-						if(!Database::execute_from_assoc($listing_assoc, $this->results_table)) echo "Not added to the database";
-						$i++;
+						if($i < $this->max_results_per_search){
+							//echo "Got here <br>";
+							//echo $i . "<br>";
+							//parse the listing html to get an assoc array that matches the results database
+							$listing_assoc = $this->get_listing_content($listing, $url, $i);
+							$listing_assoc = Database::clean($listing_assoc);
+							//and execute the sql to add it to the database
+							if(!Database::execute_from_assoc($listing_assoc, $this->results_table)) echo "Not added to the database";
+							$i++;
+						}else break;
 					}
 			 	}else echo "I did not find the trailing blockquote tag";
 			 }else echo "No results for this search <br>";

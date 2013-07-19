@@ -3,7 +3,7 @@ require_once("class.Database.inc.php");
 
 class QueryFormer {
 
-	public $default_output_limit = 100;
+	public $default_output_limit = 500;
 
 	protected $columns_to_provide = "id, name, url, price, location, query, category, recency_rating";
 	protected $max_output_limit = 250;
