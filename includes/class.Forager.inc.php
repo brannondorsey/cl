@@ -28,7 +28,8 @@ class Forager{
 	public function add_page_contents_to_db($url){
 		if($page = file_get_contents($url)){
 			 if($craigslist_results = strstr($page, '<blockquote id="toc_rows">')){
-			    if($craigslist_results = strstr($craigslist_results, '</blockquote>', TRUE)){ 
+			 	//echo $craigslist_results;
+			    if($craigslist_results = strstr($craigslist_results, '</blockquote>', true)){ #this is the problem
 					// disable PHP errors
 					$old = libxml_use_internal_errors(true);
 					$dom = new DOMDocument;
@@ -46,7 +47,7 @@ class Forager{
 						if(!Database::execute_from_assoc($listing_assoc, $this->results_table)) echo "Not added to the database";
 						$i++;
 					}
-			 	}
+			 	}else echo "I did not find the trailing blockquote tag";
 			 }else echo "No results for this search <br>";
 		}
 		else echo "URL did not open <br>";

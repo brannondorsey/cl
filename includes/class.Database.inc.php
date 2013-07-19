@@ -2,11 +2,11 @@
 
 class Database {
 
-	public static $root_dir_link = "http://localhost:8888/craigslist";
+	public static $root_dir_link = "http:/nhxcraig.com";
 
-	protected static $user     = "root";
-	protected static $password = "root";
-	protected static $db       = "craigslist";
+	protected static $user     = "nhxcraig_brannon";
+	protected static $password = "";
+	protected static $db       = "nhxcraig_craigslist";
 	protected static $host     = "localhost";
 	protected static $mysqli;
 

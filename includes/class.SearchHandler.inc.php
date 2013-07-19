@@ -59,7 +59,8 @@ class SearchHandler{
 	//boolean to determine if search already exists
 	public function search_exists($search, $category){
 		$query = "SELECT COUNT(*) FROM " . $this->search_table . " WHERE query='" . $search . "' AND category='" . $category . "'";
-		$numb_rows = intval(Database::get_all_results($query)['COUNT(*)']);
+		$results = Database::get_all_results($query);
+		$numb_rows = intval($results['COUNT(*)']);
 		return ($numb_rows > 0) ? true : false;
 	}
 

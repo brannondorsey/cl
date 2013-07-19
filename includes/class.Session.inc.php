@@ -2,7 +2,7 @@
 
 class Session {
 
-	public static $auth_code = "testertester";
+	public static $auth_code = "";
 
 	public static function start(){
 		$session_cookie_lifetime = 72; //in hours

@@ -6,7 +6,7 @@
 	$minutes_between_reloads = 5;
 	$max_loadtime_in_seconds = 60;
 
-	error_reporting(E_ALL ^ E_NOTICE);
+	error_reporting(0);
 	$timeout_in_millis = $minutes_between_reloads*60*1000;
 	$max_loadtime_in_millis = $max_loadtime_in_seconds*1000;
 	set_time_limit($max_loadtime_in_seconds);
