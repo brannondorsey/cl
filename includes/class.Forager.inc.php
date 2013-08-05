@@ -64,9 +64,18 @@ class Forager{
 		$assoc_array = array();
 		$assoc_array['name']     = (string) $listing->span[0]->a;
 		$assoc_array['url']      = (strstr($listing->a['href'], "http")) ? $listing->a['href'] : strstr($url, "/search", TRUE) . $listing->a['href'];
-		$assoc_array['price']    = trim($listing->span[1]->span->span[0]->span, "$ ");
-		$assoc_array['location'] = ucwords(strtolower((trim($listing->span[1]->span->small, "() "))));
 		$assoc_array['recency_rating'] = $recency_rating;
+
+		//get location and price semi-dynaically by using a tree structure to comb through the $listings->span[0]'s children
+		//used methods outlined here: http://www.php.net/manual/en/class.simplexmlelement.php
+		foreach($listing->span[1]->children() as $children){
+			foreach($children->attributes() as $attrs){
+				if($children->getName() == "span" &&
+					$attrs == "price") $assoc_array['price'] = trim($children, "$ ");
+				else if($children->getName() == "span" &&
+					$attrs == "pnr") $assoc_array['location'] = $children->small;
+			}
+		}
 		
 		//parse the query from the url
 		$query_name = strstr($url, "query=");
