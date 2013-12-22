@@ -28,9 +28,9 @@ class Forager{
 	//called from the persistent page
 	public function add_page_contents_to_db($url){
 		if($page = file_get_contents($url)){
-			 if($craigslist_results = strstr($page, '<blockquote id="toc_rows">')){
+			 if($craigslist_results = strstr($page, '<div class="content">')){
 			 	//echo $craigslist_results;
-			    if($craigslist_results = strstr($craigslist_results, '</blockquote>', true)){ #this is the problem
+			    if($craigslist_results = strstr($craigslist_results, '</div>', true)){ #this is the problem
 					// disable PHP errors
 					$old = libxml_use_internal_errors(true);
 					$dom = new DOMDocument;
@@ -39,8 +39,9 @@ class Forager{
 					libxml_use_internal_errors($old);
 					$craigslist = simplexml_import_dom($dom);
 					$i = 0; //used to give each listing a recency_rating
+					//echo "<pre>"; var_dump($craigslist->body->div->p[0]); echo "</pre>";
 					//for each listing...
-					foreach ($craigslist->body->blockquote->p as $listing){
+					foreach ($craigslist->body->div->p as $listing){
 						if($i < $this->max_results_per_search){
 							//echo "Got here <br>";
 							//echo $i . "<br>";
@@ -62,13 +63,14 @@ class Forager{
 	//that correspond with the results table columns
 	protected function get_listing_content($listing, $url, $recency_rating){
 		$assoc_array = array();
-		$assoc_array['name']     = (string) $listing->span[0]->a;
+		$assoc_array['name']     = (string) $listing->span[1]->a;
 		$assoc_array['url']      = (strstr($listing->a['href'], "http")) ? $listing->a['href'] : strstr($url, "/search", TRUE) . $listing->a['href'];
+		if(gettype($assoc_array['url']) == "object") $assoc_array['url'] = $assoc_array['url'][0];
 		$assoc_array['recency_rating'] = $recency_rating;
 
 		//get location and price semi-dynaically by using a tree structure to comb through the $listings->span[0]'s children
 		//used methods outlined here: http://www.php.net/manual/en/class.simplexmlelement.php
-		foreach($listing->span[1]->children() as $children){
+		foreach($listing->span[2]->children() as $children){
 			foreach($children->attributes() as $attrs){
 				if($children->getName() == "span" &&
 					$attrs == "price") $assoc_array['price'] = trim($children, "$ ");
@@ -90,7 +92,6 @@ class Forager{
 		$category_code = strstr($category_code, "?", TRUE);
 
 		$assoc_array['category'] = $category_code;
-
 		return $assoc_array;
 	}
 
